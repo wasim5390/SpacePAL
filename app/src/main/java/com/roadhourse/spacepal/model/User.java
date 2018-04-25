@@ -3,8 +3,7 @@ package com.roadhourse.spacepal.model;
 import com.google.gson.annotations.Expose;
 import com.roadhourse.spacepal.model.response.Address;
 
-import java.util.List;
-
+import io.realm.RealmList;
 import io.realm.RealmObject;
 
 /**
@@ -13,7 +12,6 @@ import io.realm.RealmObject;
 
 public class User extends RealmObject {
 
-
     private String id;
     private String firstName;
     private String lastName;
@@ -21,19 +19,22 @@ public class User extends RealmObject {
 
     @Expose(serialize = false)
     private String password;
+
+    @Expose(serialize = false)
+    private boolean isSignIn;
     @Expose(serialize = false)
     private String token;
     private boolean isDisabled;
-    private String[] roles;
+    private RealmList<String> roles;
 
     private String phoneNumber;
     private boolean isArchived;
     private String imageUrl;
     private String customerType;
 
-    private String[] notes;
+    private RealmList<String> notes;
 
-    private List<Address> addresses;
+    private RealmList<Address> addresses;
 
     public String getPassword() {
         return password;
@@ -91,11 +92,11 @@ public class User extends RealmObject {
         isDisabled = disabled;
     }
 
-    public String[] getRoles() {
+    public RealmList<String> getRoles() {
         return roles;
     }
 
-    public void setRoles(String[] roles) {
+    public void setRoles(RealmList<String> roles) {
         this.roles = roles;
     }
 
@@ -131,19 +132,27 @@ public class User extends RealmObject {
         this.customerType = customerType;
     }
 
-    public String[] getNotes() {
+    public RealmList<String> getNotes() {
         return notes;
     }
 
-    public void setNotes(String[] notes) {
+    public void setNotes(RealmList<String> notes) {
         this.notes = notes;
     }
 
-    public List<Address> getAddresses() {
+    public RealmList<Address> getAddresses() {
         return addresses;
     }
 
-    public void setAddresses(List<Address> addresses) {
+    public void setAddresses(RealmList<Address> addresses) {
         this.addresses = addresses;
+    }
+
+    public boolean isSignIn() {
+        return isSignIn;
+    }
+
+    public void setSignIn(boolean signIn) {
+        isSignIn = signIn;
     }
 }

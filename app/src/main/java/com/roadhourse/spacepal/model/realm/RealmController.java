@@ -65,7 +65,6 @@ public class RealmController {
         realm.commitTransaction();
     }
 
-
     public void saveUser(User user){
         realm.beginTransaction();
         realm.copyToRealm(user);
@@ -75,6 +74,7 @@ public class RealmController {
     public User getUser(){
       return realm.where(User.class).findFirst();
     }
+
 
     //Refresh the realm istance
     public void refresh() {

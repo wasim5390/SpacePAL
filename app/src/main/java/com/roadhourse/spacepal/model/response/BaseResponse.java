@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by sidhu on 4/11/2018.
  */
 
-public class BaseResponse {
+public class BaseResponse{
 
     @SerializedName("http_code")
     private int httpCode;

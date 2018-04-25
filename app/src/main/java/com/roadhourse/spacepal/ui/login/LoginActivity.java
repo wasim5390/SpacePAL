@@ -7,7 +7,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.roadhourse.spacepal.BaseActivity;
 import com.roadhourse.spacepal.R;
-import com.roadhourse.spacepal.ui.LoginFragment;
+import com.roadhourse.spacepal.util.PreferenceUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,5 +34,6 @@ public class LoginActivity extends BaseActivity {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.add(R.id.frameLayout, loginFragment);
         transaction.commit();
+        LoginPresenter loginPresenter = new LoginPresenter(loginFragment, PreferenceUtil.getInstance(this));
     }
 }

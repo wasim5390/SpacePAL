@@ -1,6 +1,5 @@
 package com.roadhourse.spacepal.util;
 
-import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -10,8 +9,7 @@ import android.util.Base64;
 import android.util.Patterns;
 
 import com.roadhourse.spacepal.model.response.APIError;
-import com.roadhourse.spacepal.model.User;
-import com.roadhourse.spacepal.model.realm.RealmController;
+import com.roadhourse.spacepal.model.response.TokenResponse;
 import com.roadhourse.spacepal.source.RetrofitHelper;
 
 import java.io.IOException;
@@ -48,16 +46,10 @@ public class Util {
         return encoded;
     }
 
-    public static String getAuthorizationHeader(Context context) throws UnsupportedEncodingException {
-        User user = RealmController.with((Activity) context).getInstance().getUser();
-        String username = user.getEmail();
-        String password = user.getPassword();
-
-        if (username!=null&&!username.isEmpty()&&password!=null&&!password.isEmpty()) {
-            return encodeBase64(username+":"+password);
-        } else {
+    public static String getAuthorizationHeader(TokenResponse tokenObj) throws UnsupportedEncodingException {
+        if(tokenObj==null)
             return null;
-        }
+        return tokenObj==null?null:tokenObj.getAccessToken();
     }
 
 

@@ -3,8 +3,8 @@ package com.roadhourse.spacepal;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.clicksend.directmail.source.RemoteDataSource;
-import com.clicksend.directmail.source.Repository;
+import com.roadhourse.spacepal.source.RemoteDataSource;
+import com.roadhourse.spacepal.source.Repository;
 
 import static com.google.gson.internal.$Gson$Preconditions.checkNotNull;
 
