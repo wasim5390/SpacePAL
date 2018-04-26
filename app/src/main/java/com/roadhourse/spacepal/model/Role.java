@@ -2,7 +2,9 @@ package com.roadhourse.spacepal.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Role{
+import io.realm.RealmObject;
+
+public class Role extends RealmObject{
 
 	@SerializedName("name")
 	private String name;

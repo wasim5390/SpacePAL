@@ -6,7 +6,7 @@ import android.util.Log;
 
 import com.roadhourse.spacepal.event.LoginFailEvent;
 import com.roadhourse.spacepal.model.realm.RealmController;
-import com.roadhourse.spacepal.ui.login._LoginActivity;
+import com.roadhourse.spacepal.ui.login.LoginActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -56,7 +56,7 @@ public class SpacePalApplication extends Application implements AppLifecycleHand
     public void logout() {
 
         RealmController.with(this).getUser().deleteFromRealm();
-        Intent intent = new Intent(this, _LoginActivity.class);
+        Intent intent = new Intent(this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }

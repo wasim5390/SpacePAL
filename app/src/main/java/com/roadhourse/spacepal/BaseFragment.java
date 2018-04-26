@@ -9,8 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.Timer;
-
 import butterknife.ButterKnife;
 
 /**
@@ -20,8 +18,6 @@ import butterknife.ButterKnife;
 public abstract class BaseFragment extends Fragment implements Constant {
     public BaseActivity mBaseActivity;
     public View view;
-    public Timer timer;
-
 
     @Override
     public void onAttach(Context context) {
@@ -35,7 +31,7 @@ public abstract class BaseFragment extends Fragment implements Constant {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(getID(), container, false);
-        ButterKnife.bind(this, view);
+        ButterKnife.bind(this,view);
         this.view = view;
         initUI(view);
         return view;
@@ -45,7 +41,7 @@ public abstract class BaseFragment extends Fragment implements Constant {
 
     public abstract void initUI(View view);
 
-    public View getView() {
+    public View getView(){
         return this.view;
     }
 

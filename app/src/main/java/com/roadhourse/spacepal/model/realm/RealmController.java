@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.app.Application;
 import android.support.v4.app.Fragment;
 
+import com.roadhourse.spacepal.model.Role;
 import com.roadhourse.spacepal.model.User;
+
+import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmObject;
@@ -67,8 +70,20 @@ public class RealmController {
 
     public void saveUser(User user){
         realm.beginTransaction();
-        realm.copyToRealm(user);
+        realm.copyToRealmOrUpdate(user);
         realm.commitTransaction();
+    }
+
+    public void saveRoles(List<Role> roleList){
+        realm.executeTransaction(realm -> {
+            realm.where(Role.class).findAll().deleteAllFromRealm();
+            realm.insert(roleList);
+        });
+
+    }
+
+    public List<Role> getRoles(){
+        return realm.copyFromRealm(realm.where(Role.class).findAll());
     }
 
     public User getUser(){

@@ -4,4 +4,11 @@
     <string name="label_password">Password</string>
     <string name="label_login">Login</string>
     <string name="label_forgot_your_password">Forgot your password?</string>
+    <string name="email_address">Email</string>
+    <string name="first_name">First Name</string>
+    <string name="surname">Surname</string>
+    <string name="mobile_number">Phone Number</string>
+    <string name="address">Address</string>
+    <string name="role">Role</string>
+    <string name="edit_profile">Edit</string>
 </resources>

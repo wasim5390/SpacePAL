@@ -1,5 +1,6 @@
 package com.roadhourse.spacepal.ui.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
@@ -11,7 +12,9 @@ import com.roadhourse.spacepal.BaseFragment;
 import com.roadhourse.spacepal.R;
 import com.roadhourse.spacepal.model.Role;
 import com.roadhourse.spacepal.model.User;
+import com.roadhourse.spacepal.model.realm.RealmController;
 import com.roadhourse.spacepal.model.response.TokenResponse;
+import com.roadhourse.spacepal.ui.dashboard.DashboardActivity;
 import com.roadhourse.spacepal.util.PreferenceUtil;
 
 import java.util.List;
@@ -55,7 +58,6 @@ public class LoginFragment extends BaseFragment implements LoginContract.View{
 
     @Override
     public void initUI(View view) {
-
     }
 
     @Override
@@ -65,7 +67,9 @@ public class LoginFragment extends BaseFragment implements LoginContract.View{
 
     @Override
     public void signInIsSuccessful(User user) {
-        Toast.makeText(mBaseActivity, user.getEmail(), Toast.LENGTH_SHORT).show();
+        RealmController.with(getActivity()).saveUser(user);
+        Intent intent = new Intent(getContext(), DashboardActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -76,6 +80,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View{
 
     @Override
     public void rolesRetrieved(List<Role> roles) {
+        RealmController.with(getActivity()).saveRoles(roles);
         boolean accessible=false;
         for(Role role:roles) {
             if (role.getName().toUpperCase().equals(ROLE_PICKER) || role.getName().toUpperCase().equals(ROLE_DRIVER)){
@@ -116,6 +121,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View{
 
     @OnClick(R.id.btnLogin)
     public void onLoginClick(){
+
         //presenter.getToken("admin@roadhouse.com.au","123123");
         presenter.getToken(etEmail.getText().toString(),etPassword.getText().toString());
     }

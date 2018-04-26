@@ -5,13 +5,14 @@ import com.roadhourse.spacepal.model.response.Address;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by sidhu on 4/24/2018.
  */
 
 public class User extends RealmObject {
-
+    @PrimaryKey
     private String id;
     private String firstName;
     private String lastName;

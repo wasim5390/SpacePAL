@@ -23,6 +23,7 @@ public class LoginContract {
         void showErrorOnEmail(String error);
         void showErrorOnPassword(String error);
         void showProgressDialog(boolean isInProgress);
+
     }
 
 

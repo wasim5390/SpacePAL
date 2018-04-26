@@ -70,6 +70,7 @@ public class LoginPresenter implements LoginContract.Presenter,Constant{
 
     @Override
     public void getToken(String username, String password) {
+        preferenceUtil.saveTokenObject(null);
         if (username==null||username.trim().isEmpty()) {
             loginView.showErrorOnEmail("Please enter email");
             return;
