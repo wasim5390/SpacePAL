@@ -2,7 +2,10 @@ package com.roadhourse.spacepal.source;
 
 
 import com.roadhourse.spacepal.model.User;
+import com.roadhourse.spacepal.model.response.Order;
 import com.roadhourse.spacepal.model.response.TokenResponse;
+
+import java.util.List;
 
 /**
  * Created by sidhu on 4/11/2018.
@@ -16,7 +19,7 @@ public interface DataSource {
 
     void getAccount(GetDataCallback<User> callback);
     //void forgotPassword(HashMap<String, Object> params, GetResponseCallback<GetVerifyMobileResponse> callback);
-
+    void getOrders(String role,GetDataCallback<List<Order>> callback);
 
     interface GetDataCallback<M> {
         void onDataReceived(M data);

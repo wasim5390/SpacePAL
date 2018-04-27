@@ -3,7 +3,10 @@ package com.roadhourse.spacepal.source;
 import android.support.annotation.NonNull;
 
 import com.roadhourse.spacepal.model.User;
+import com.roadhourse.spacepal.model.response.Order;
 import com.roadhourse.spacepal.model.response.TokenResponse;
+
+import java.util.List;
 
 /**
  * Created by sidhu on 4/11/2018.
@@ -69,6 +72,21 @@ public class Repository implements DataSource{
             @Override
             public void onFailed(int code, String message) {
                 callback.onFailed(code, message);
+            }
+        });
+    }
+
+    @Override
+    public void getOrders(String role, GetDataCallback<List<Order>> callback) {
+        mRemoteDataSource.getOrders(role, new GetDataCallback<List<Order>>() {
+            @Override
+            public void onDataReceived(List<Order> data) {
+                callback.onDataReceived(data);
+            }
+
+            @Override
+            public void onFailed(int code, String message) {
+                callback.onFailed(code,message);
             }
         });
     }

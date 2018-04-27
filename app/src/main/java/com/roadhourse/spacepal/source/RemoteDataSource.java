@@ -3,8 +3,11 @@ package com.roadhourse.spacepal.source;
 
 import com.roadhourse.spacepal.model.User;
 import com.roadhourse.spacepal.model.response.APIError;
+import com.roadhourse.spacepal.model.response.Order;
 import com.roadhourse.spacepal.model.response.TokenResponse;
 import com.roadhourse.spacepal.util.Util;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -90,6 +93,27 @@ public class RemoteDataSource implements DataSource {
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 callback.onFailed(0, ERROR_MESSAGE);
+            }
+        });
+    }
+
+    @Override
+    public void getOrders(String role, GetDataCallback<List<Order>> callback) {
+        Call<List<Order>> call = RetrofitHelper.getInstance().getApi().getOrders(role);
+        call.enqueue(new Callback<List<Order>>() {
+            @Override
+            public void onResponse(Call<List<Order>> call, Response<List<Order>> response) {
+                if(response.isSuccessful()){
+                    callback.onDataReceived(response.body());
+                }else{
+                    APIError error = Util.parseError(response);
+                    callback.onFailed(error.getHttpCode(), error.getResponseMsg());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Order>> call, Throwable t) {
+                callback.onFailed(0,ERROR_MESSAGE);
             }
         });
     }

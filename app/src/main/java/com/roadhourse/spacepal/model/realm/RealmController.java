@@ -5,7 +5,7 @@ import android.app.Application;
 import android.support.v4.app.Fragment;
 
 import com.roadhourse.spacepal.model.Role;
-import com.roadhourse.spacepal.model.User;
+import com.roadhourse.spacepal.model.response.Order;
 
 import java.util.List;
 
@@ -68,11 +68,6 @@ public class RealmController {
         realm.commitTransaction();
     }
 
-    public void saveUser(User user){
-        realm.beginTransaction();
-        realm.copyToRealmOrUpdate(user);
-        realm.commitTransaction();
-    }
 
     public void saveRoles(List<Role> roleList){
         realm.executeTransaction(realm -> {
@@ -82,13 +77,22 @@ public class RealmController {
 
     }
 
+    public void saveOrders(List<Order> orderList){
+        realm.executeTransaction(realm -> {
+            realm.where(Order.class).findAll().deleteAllFromRealm();
+            realm.copyToRealm(orderList);
+        });
+
+    }
+
+    public List<Order> getOrders(){
+        return realm.copyFromRealm(realm.where(Order.class).findAll());
+    }
+
     public List<Role> getRoles(){
         return realm.copyFromRealm(realm.where(Role.class).findAll());
     }
 
-    public User getUser(){
-      return realm.where(User.class).findFirst();
-    }
 
 
     //Refresh the realm istance

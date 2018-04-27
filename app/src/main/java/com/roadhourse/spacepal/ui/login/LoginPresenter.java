@@ -2,15 +2,12 @@ package com.roadhourse.spacepal.ui.login;
 
 
 import com.roadhourse.spacepal.Constant;
-import com.roadhourse.spacepal.model.Role;
 import com.roadhourse.spacepal.model.User;
 import com.roadhourse.spacepal.model.response.APIError;
 import com.roadhourse.spacepal.model.response.TokenResponse;
 import com.roadhourse.spacepal.source.RetrofitHelper;
 import com.roadhourse.spacepal.util.PreferenceUtil;
 import com.roadhourse.spacepal.util.Util;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,7 +37,7 @@ public class LoginPresenter implements LoginContract.Presenter,Constant{
 
     @Override
     public void signIn() {
-        loginView.showProgressDialog(true);
+        //loginView.showProgressDialog(true);
 
         Call<User> call = RetrofitHelper.getInstance().getApi().getAccount();
         call.enqueue(new Callback<User>() {
@@ -52,7 +49,7 @@ public class LoginPresenter implements LoginContract.Presenter,Constant{
 
                 } else {
                     APIError error = Util.parseError(response);
-                    loginView.showMessage(error.getResponseMsg(),true);
+                    loginView.showMessage(error.getErrorDescription(),true);
 
                 }
             }
@@ -87,13 +84,14 @@ public class LoginPresenter implements LoginContract.Presenter,Constant{
         call.enqueue(new Callback<TokenResponse>() {
             @Override
             public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
-                loginView.showProgressDialog(false);
+               // loginView.showProgressDialog(false);
                 if (response.code()==200) {
                     loginView.tokenRetrieved(response.body());
 
                 } else {
                     APIError error = Util.parseError(response);
-                    loginView.showMessage(error.getResponseMsg(),true);
+                    loginView.showMessage(error.getErrorDescription(),true);
+                    loginView.showProgressDialog(false);
                 }
             }
 
@@ -106,31 +104,4 @@ public class LoginPresenter implements LoginContract.Presenter,Constant{
         });
     }
 
-    @Override
-    public void getRoles() {
-
-        loginView.showProgressDialog(true);
-
-        Call<List<Role>> call = RetrofitHelper.getInstance().getApi().getRoles();
-        call.enqueue(new Callback<List<Role>>() {
-            @Override
-            public void onResponse(Call<List<Role>> call, Response<List<Role>> response) {
-                loginView.showProgressDialog(false);
-                if (response.code()==200) {
-                    loginView.rolesRetrieved(response.body());
-
-                } else {
-                    APIError error = Util.parseError(response);
-                    loginView.showMessage(error.getResponseMsg(),true);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Role>> call, Throwable t) {
-                loginView.showProgressDialog(false);
-                loginView.showMessage("Fail...",true);
-                t.printStackTrace();
-            }
-        });
-    }
 }

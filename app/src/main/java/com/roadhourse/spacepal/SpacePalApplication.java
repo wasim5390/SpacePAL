@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.roadhourse.spacepal.event.LoginFailEvent;
-import com.roadhourse.spacepal.model.realm.RealmController;
 import com.roadhourse.spacepal.ui.login.LoginActivity;
+import com.roadhourse.spacepal.util.PreferenceUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -46,7 +46,7 @@ public class SpacePalApplication extends Application implements AppLifecycleHand
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(LoginFailEvent event) {
-        if (RealmController.with(this).getInstance().getUser().isSignIn()) {
+        if (PreferenceUtil.getInstance(this).getAccount().isSignIn()) {
             logout();
         }
     }
@@ -55,7 +55,7 @@ public class SpacePalApplication extends Application implements AppLifecycleHand
 
     public void logout() {
 
-        RealmController.with(this).getUser().deleteFromRealm();
+        PreferenceUtil.getInstance(this).saveAccount(null);
         Intent intent = new Intent(this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);

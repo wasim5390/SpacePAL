@@ -5,8 +5,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.roadhourse.spacepal.model.Role;
+import com.roadhourse.spacepal.model.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,33 +15,35 @@ import java.util.List;
  */
 
 public class DashboardFragmentPagerAdapter extends FragmentStatePagerAdapter{
-
+    private List<Fragment> fragments = new ArrayList<>();
     private Context mContext;
-    private List<Role> mRolesList;
-    private String userId;
-    public DashboardFragmentPagerAdapter(Context context, FragmentManager fm, List<Role> roles, String userId) {
+    User user;
+    public DashboardFragmentPagerAdapter(Context context, FragmentManager fm, User user) {
         super(fm);
         mContext = context;
-        this.mRolesList = roles;
-        this.userId = userId;
+        this.user=user;
     }
 
     // This determines the fragment for each tab
     @Override
     public Fragment getItem(int position) {
-        return JobListFragment.getInstance(mRolesList.get(position).getName(),userId);
+       return fragments.get(position);
     }
 
     // This determines the number of tabs
     @Override
     public int getCount() {
-        return mRolesList.size();
+        return user.getRoles().size();
     }
 
     // This determines the title for each tab
     @Override
     public CharSequence getPageTitle(int position) {
         // Generate title based on item position
-        return mRolesList.get(position).getName();
+        return user.getRoles().get(position);
+    }
+
+    public void addFragment(Fragment fragment){
+        fragments.add(fragment);
     }
 }

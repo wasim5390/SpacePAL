@@ -7,6 +7,13 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class APIError {
+
+    @SerializedName("error_description")
+    private String errorDescription;
+
+    @SerializedName("error")
+    private String error;
+
     @SerializedName("http_code")
     private int httpCode;
 
@@ -38,5 +45,20 @@ public class APIError {
 
     public void setResponseMsg(String responseMsg) {
         this.responseMsg = responseMsg;
+    }
+    public String getErrorDescription() {
+        return errorDescription;
+    }
+
+    public void setErrorDescription(String errorDescription) {
+        this.errorDescription = errorDescription;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 }

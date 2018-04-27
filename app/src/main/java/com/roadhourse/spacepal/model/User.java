@@ -3,16 +3,16 @@ package com.roadhourse.spacepal.model;
 import com.google.gson.annotations.Expose;
 import com.roadhourse.spacepal.model.response.Address;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.realm.RealmList;
-import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by sidhu on 4/24/2018.
  */
 
-public class User extends RealmObject {
-    @PrimaryKey
+public class User {
     private String id;
     private String firstName;
     private String lastName;
@@ -26,14 +26,14 @@ public class User extends RealmObject {
     @Expose(serialize = false)
     private String token;
     private boolean isDisabled;
-    private RealmList<String> roles;
+    private String[] roles;
 
     private String phoneNumber;
     private boolean isArchived;
     private String imageUrl;
     private String customerType;
 
-    private RealmList<String> notes;
+    private List<String> notes;
 
     private RealmList<Address> addresses;
 
@@ -93,11 +93,15 @@ public class User extends RealmObject {
         isDisabled = disabled;
     }
 
-    public RealmList<String> getRoles() {
-        return roles;
+    public List<String> getRoles() {
+        List<String> mRoles = new ArrayList<>();
+        for(String role:roles){
+            mRoles.add(role);
+        }
+        return mRoles;
     }
 
-    public void setRoles(RealmList<String> roles) {
+    public void setRoles(String[] roles) {
         this.roles = roles;
     }
 
@@ -133,7 +137,7 @@ public class User extends RealmObject {
         this.customerType = customerType;
     }
 
-    public RealmList<String> getNotes() {
+    public List<String> getNotes() {
         return notes;
     }
 

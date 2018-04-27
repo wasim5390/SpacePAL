@@ -10,14 +10,10 @@ import android.widget.Toast;
 
 import com.roadhourse.spacepal.BaseFragment;
 import com.roadhourse.spacepal.R;
-import com.roadhourse.spacepal.model.Role;
 import com.roadhourse.spacepal.model.User;
-import com.roadhourse.spacepal.model.realm.RealmController;
 import com.roadhourse.spacepal.model.response.TokenResponse;
 import com.roadhourse.spacepal.ui.dashboard.DashboardActivity;
 import com.roadhourse.spacepal.util.PreferenceUtil;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -67,31 +63,32 @@ public class LoginFragment extends BaseFragment implements LoginContract.View{
 
     @Override
     public void signInIsSuccessful(User user) {
-        RealmController.with(getActivity()).saveUser(user);
-        Intent intent = new Intent(getContext(), DashboardActivity.class);
-        startActivity(intent);
+
+        boolean accessible=false;
+        for(String role:user.getRoles()) {
+            if (role.toUpperCase().equals(ROLE_PICKER) || role.toUpperCase().equals(ROLE_DRIVER)){
+                accessible = true;
+                break;
+            }
+        }
+        if(accessible)
+        {
+            PreferenceUtil.getInstance(getActivity()).saveAccount(user);
+            Intent intent = new Intent(getContext(), DashboardActivity.class);
+            startActivity(intent);
+        }
+        else
+            Toast.makeText(getActivity(),"Don't have privilege to access this app",Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
     public void tokenRetrieved(TokenResponse tokenResponse) {
         PreferenceUtil.getInstance(getActivity()).saveTokenObject(tokenResponse);
-        presenter.getRoles();
+        presenter.signIn();
     }
 
-    @Override
-    public void rolesRetrieved(List<Role> roles) {
-        RealmController.with(getActivity()).saveRoles(roles);
-        boolean accessible=false;
-        for(Role role:roles) {
-            if (role.getName().toUpperCase().equals(ROLE_PICKER) || role.getName().toUpperCase().equals(ROLE_DRIVER)){
-                accessible = true;
-                break;}
-        }
-        if(accessible)
-            presenter.signIn();
-        else
-            Toast.makeText(getActivity(),"Don't have privilege to access this app",Toast.LENGTH_SHORT).show();
-    }
+
 
     @Override
     public void showMessage(String text, boolean alert) {
